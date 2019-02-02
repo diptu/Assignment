@@ -10,43 +10,45 @@ class FilmController extends Controller
 {
     public function index()
     {
-        return 'Hello index';
+        $films = app('App\Http\Controllers\Api')->index();
+        #$films = json_decode($response);
+        return view('films.index')->with('films',$films);
+    }
+    public function show($slug){
+            $response = app('App\Http\Controllers\Api')->show($slug);
+            $film = json_decode($response);
+            //echo var_dump($film);
+
+
+            return view('films.film_detail')->with('film',$film);
     }
 
-    public function films()
-    {
-        $response = app('App\Http\Controllers\Api')->index();
-
-        // echo '<pre>';
-        // print_r(json_decode($response));
-        // echo '</pre>';
-        $films = json_decode($response);
-        $data['films'] = $films;
-        $data['slug'] = new Slug();
-
-        return view('films')->with('data',$data);
-
+    public function create(){
+        return view('films.create');
 
     }
-
-    public function film($slug)
-    {
-
-
-        // echo 'found';
-        $response = app('App\Http\Controllers\Api')->get_film_by($slug);
-
-
-        $film = json_decode($response);
-
-        // return view('films')->with('films',$films);
-        echo '<pre>';
-        print_r($film);
-        echo '</pre>';
-
-
-
-    }
+    // public function films()
+    // {
+    //     $response = app('App\Http\Controllers\Api')->index();
+    //     $films = json_decode($response);
+    //     return view('films.films')->with('films',$films);
+    //
+    //
+    // }
+    //
+    // public function film($slug)
+    // {
+    //
+    //     $response = app('App\Http\Controllers\Api')->get_film_by($slug);
+    //
+    //
+    //     $film = json_decode($response);
+    //
+    //     return view('films.film_detail')->with('film',$film);
+    //
+    // }
+    //
+    //
 
 
 

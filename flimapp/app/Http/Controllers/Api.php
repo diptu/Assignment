@@ -4,45 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Film;
+use DB;
 
 class Api extends Controller
 {
     public function index()
     {
-        return Film::all();
+        return Film::orderBy('release_date','desc')->paginate(5);
     }
+    public function show($slug){
 
-    public function get_film_by($slug){
-        // return Film::find('name', $slug);
-        return Film::select('*')->where('slug', 'like', $slug.'%')
+        return DB::table('films')
+            ->select('films.*','genres.name as genre')
+            ->join('genres','genres.id','=','films.genre_id')
+            ->where('films.slug', '=', $slug)
             ->get();
+            // return Film::select('*')->where('slug', '=', $slug)
+            //         ->first();
     }
-
-    public function show(Film $article)
-    {
-        return $article;
-    }
-
-    public function store(Request $request)
-    {
-        $article = Film::create($request->all());
-
-        return response()->json($article, 201);
-    }
-
-    public function update(Request $request, Film $article)
-    {
-        $article->update($request->all());
-
-        return response()->json($article, 200);
-    }
-
-    public function delete(Film $article)
-    {
-        $article->delete();
-
-        return response()->json(null, 204);
-    }
+    //
+    // public function get_film_by($slug){
+    //
+    //     return Film::select('*')->where('slug', '=', $slug)
+    //         ->first();
+    // }
+    //
+    // public function create(){
+    //     return view('films.create');
+    // }
 
 
 

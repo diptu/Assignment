@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','PagesController@index');
+Route::resource('films','FilmController');
+
+// Route::get('films', 'FilmController@index');
+// Route::get('films', 'FilmController@films');
+// Route::get('film/{slug}', 'FilmController@film');
+// Route::get('films/create', 'FilmController@create');
