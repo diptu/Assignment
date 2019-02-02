@@ -20,6 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('films','FilmController');
 
+Auth::routes();
+
+Route::get('/', 'HomeController@index');
+
 // Route::get('/','PagesController@index');
 // Route::get('films', 'FilmController@index');
 // Route::get('films/{id}', 'FilmController@show');

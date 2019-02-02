@@ -6,9 +6,9 @@
 
         @foreach ($films as $film)
             <ul>
-                <h3><a href="/films/{{ $film->slug }}"> {{ $film->name }}</a> </h3>
-            </p>released on :{{$film->release_date}}</p>
-                <p>{{$film->description}}</p>
+                <h3><a href="/films/{{ $film->slug }}"> {!! $film->name !!}</a> </h3>
+            </p>released on :{!! $film->release_date !!}</p>
+                <p>{!! $film->description !!}</p>
             </ul>
 
         @endforeach

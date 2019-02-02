@@ -36,12 +36,12 @@ class Api extends Controller
         $film->release_date = $request->input('release_date');
         $film->ticket_price = $request->input('ticket_price');
         $film->country = $request->input('country');
-        $film->user_id = 1;// default for testing
+        $film->user_id = auth()->user()->id;
         $film->genre_id = 1;//default for testing
         $slug = new Slug;
         $film->slug = $slug->createSlug($request->input('name'));
         $film->save();
         return redirect('/films')->with('success','Film list has been updated');
     }
-    
+
 }

@@ -18,3 +18,7 @@ Route::resource('films','FilmController');
 // Route::get('films', 'FilmController@films');
 // Route::get('film/{slug}', 'FilmController@film');
 // Route::get('films/create', 'FilmController@create');
+
+Auth::routes();
+
+Route::get('/', 'HomeController@index');
