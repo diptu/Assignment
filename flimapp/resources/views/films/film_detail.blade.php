@@ -5,11 +5,14 @@
 
 
         <h3>{{ $film->name}}</h3>
+        <div class="well">
+        </div>
         <div>
             <p>Relesed date :{{ $film->release_date}}</p>
             <p>Rating :{{ $film->rating}}</p>
             <p>Ticket Price :{{ $film->ticket_price}} bdt</p>
             <p>Country :{{ $film->country}}</p>
+            <p>Rating :{{ $film->rating}}</p>
         </div>
     <hr>
     @foreach ($comments as $comment)

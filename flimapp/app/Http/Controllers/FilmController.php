@@ -24,6 +24,7 @@ class FilmController extends Controller
             //echo gettype($film->id);
             //echo $film->user_id;
             $comments = app('App\Http\Controllers\Api')->getComment($slug);
+
             //$film = json_decode($response);
             //var_dump($comments);
             return view('films.film_detail')

@@ -47,10 +47,25 @@ class Api extends Controller
             'name' => 'required',
             'description' => 'required',
             'release_date' => 'required',
-            'ticket_price' => 'required'
+            'ticket_price' => 'required',
+            'photo' => 'image | nullable | max:1999'
         ]);
+
+        if($request->hasFile('photo')){
+            $filenameWithExt = $request->file('photo')->getClientOriginalName();
+
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+            $extension = $request->file('photo')->getClientOriginalExtension();
+
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('photo')->storeAs('public/photo', $fileNameToStore);
+        }else{
+            $fileNameToStore = "no_image.png";
+        }
         $film = new Film;
         $film->name = $request->input('name');
+        $film->photo = $fileNameToStore;
         $film->description = $request->input('description');
         $film->release_date = $request->input('release_date');
         $film->ticket_price = $request->input('ticket_price');
