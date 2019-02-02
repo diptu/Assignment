@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Film;
 use App\Slug;
 use App\User;
+use App\Comment;
 use DB;
 
 class Api extends Controller
@@ -16,11 +17,29 @@ class Api extends Controller
     }
     public function show($slug){
 
+        // return DB::table('films')
+        //     ->select('films.*','genres.name as genre','users.name as full_name')
+        //     ->join('genres','genres.id','=','films.genre_id')
+        //     ->join('users','users.id','=','users.id')
+        //     ->where('films.slug', '=', $slug)
+        //     ->get();
+
         return DB::table('films')
-            ->select('films.*','genres.name as genre')
-            ->join('genres','genres.id','=','films.genre_id')
+            ->where('films.slug', '=', $slug)
+            ->first();
+
+
+    }
+    public function getComment($slug){
+
+        return DB::table('films')
+            ->select('films.*','comments.comment','users.name as full_name')
+            ->join('comments','films.id','=','comments.film_id')
+            ->join('users','comments.user_id','=','users.id')
             ->where('films.slug', '=', $slug)
             ->get();
+
+
     }
     public function store(Request $request){
 
@@ -41,7 +60,18 @@ class Api extends Controller
         $slug = new Slug;
         $film->slug = $slug->createSlug($request->input('name'));
         $film->save();
-        return redirect('/films')->with('success','Film list has been updated');
+        #return redirect('/films')->with('success','Film list has been updated');
+    }
+
+    public function comment(Request $request, $id,$slug){
+        $this->validate($request, [
+            'comment' => 'required'
+        ]);
+        $comment = new Comment;
+        $comment->comment = $request->input('comment');
+        $comment->user_id = auth()->user()->id;
+        $comment->film_id = $id;
+        $comment->save();
     }
 
 }

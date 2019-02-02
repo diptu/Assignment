@@ -1,18 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-    @foreach ($film as $f)
-        <h3>{{ $f->name}}</h3>
+
+
+
+        <h3>{{ $film->name}}</h3>
         <div>
-            <p>Relesed date :{{ $f->release_date}}</p>
-            <p>Rating :{{ $f->rating}}</p>
-            <p>Ticket Price :{{ $f->ticket_price}} bdt</p>
-            <p>Country :{{ $f->country}}</p>
-            <p>Genre : {{ $f->genre}}</p>
+            <p>Relesed date :{{ $film->release_date}}</p>
+            <p>Rating :{{ $film->rating}}</p>
+            <p>Ticket Price :{{ $film->ticket_price}} bdt</p>
+            <p>Country :{{ $film->country}}</p>
         </div>
-
-
+    <hr>
+    @foreach ($comments as $comment)
+        <p>{{$comment->full_name}} : {{ $comment->comment}}</p>
 
     @endforeach
+    @if(!Auth::guest())
+        {!! Form::open(['action' => ['FilmController@comment',$film->id,$film->slug],'method' => 'POST']) !!}
+
+        <div class="form-group">
+            {{Form::label('commnet','Comment')}}
+            {{Form::textarea('comment', '', ['placeholder' => 'Add a comment'])}}
+        </div>
+
+            {{Form::submit('comment')}}
+        {!! Form::close() !!}
+
+    @endif
 
 @endsection

@@ -12,6 +12,7 @@
 */
 
 Route::get('/','PagesController@index');
+Route::post('films/{slug}/{id}/', 'FilmController@comment');
 Route::resource('films','FilmController');
 
 // Route::get('films', 'FilmController@index');

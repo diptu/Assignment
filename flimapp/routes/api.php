@@ -17,7 +17,7 @@ use App\Film;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::post('films/{slug}/{id}/', 'FilmController@comment');
 Route::resource('films','FilmController');
 
 Auth::routes();
